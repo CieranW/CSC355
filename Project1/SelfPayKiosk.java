@@ -3,6 +3,7 @@ public class SelfPayKiosk{
    private int numCustomers;
    private double totalSales;
    private double amountDue;
+   private boolean isCheckedOut;
 
    // Constructor
    public SelfPayKiosk(){
@@ -10,6 +11,7 @@ public class SelfPayKiosk{
       numCustomers = 0;
       totalSales = 0.0;
       amountDue = 0.0;
+      isCheckedOut = false;
    } 
 
    // Return total daily sales    
@@ -45,6 +47,10 @@ public class SelfPayKiosk{
    // Cancel current purchases    
    public void cancelTransaction(){
       /* Complete the method */ 
+      if (!isCheckedOut) {
+         amountDue = 0.0;
+      }
+
    }
 
    // Reset register for the day    
