@@ -41,7 +41,9 @@ public class SelfPayKiosk{
    // Apply sales tax to current purchases
    public void checkOut() {
       /* Complete the method */ 
-      amountDue += (amountDue * SALES_TAX);
+      if (isCheckedOut) {
+         amountDue += (amountDue * SALES_TAX);
+      }
    }
 
    // Cancel current purchases    
@@ -64,10 +66,11 @@ public class SelfPayKiosk{
    // Apply payment to amount due 
    public void makePayment(double payment) {
       /* Complete the method */ 
-      if (payment >= amountDue) {
+      if (payment >= amountDue && !isCheckedOut) {
          totalSales += amountDue;
          numCustomers++;
          amountDue = 0.0;
+         isCheckedOut = true;
       } else {
          totalSales += payment;
          amountDue -= payment;
