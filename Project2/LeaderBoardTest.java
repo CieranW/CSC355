@@ -1,7 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-ß
+
 /* you need to use arrays to solve this problem. This was more complex
  * than using an array list since arraylist are mutable which allows for dynamic resizing based on the inputs. 
  * To acomplish this I read in the file of unsorted contestants into an unsorted array. Then once I had my unsorted array complete
