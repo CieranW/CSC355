@@ -1,55 +1,47 @@
 public class LeaderBoard {
     private Contestant[] contestants;
 
-
+    // Constructor to initialize the contestant array
     public LeaderBoard(int size) {
         contestants = new Contestant[size];
     }
 
+    // Method to add a contestant to the array
     public void add(Contestant contestant) {
         for (int i = 0; i < contestants.length; i++) {
-            if (contestants[i] != null) {
+            // Only add if the current spot is null
+            if (contestants[i] == null) {
                 contestants[i] = contestant;
                 break;
             }
         }
     }
 
-    Contestant[] finalBoard() {
-        int n = array.length;
-        boolean swapped;
-
-        // Outer loop for each pass
-        for (int i = 0; i < n - 1; i++) {
-            swapped = false;
-
-            // Inner loop for comparing and swapping elements
-            for (int j = 0; j < n - i - 1; j++) {
-                // Compare adjacent elements and swap if needed (Descending order)
-                if (array[j] < array[j + 1]) {
-                    // Swap the elements
-                    int temp = array[j];
-                    array[j] = array[j + 1];
-                    array[j + 1] = temp;
-
-                    // Mark swapped as true
-                    swapped = true;
-                }
-            }
-
-            // If no swaps were made, the array is already sorted
-            if (!swapped) {
-                break;
-            }        for (int i = 0; i < contestants.length; i++) {
-            for (int j = 0; j < contestants.length; j++) {
-                if (contestants[j].contestantScore > contestants[i].contestantScore) {
-                    Contestant temp = contestants[i];
-                    contestants[i] = contestants[j];
-                    contestants[j] = temp;
+    // Sorting method using Contestant's compareTo method
+    public Contestant[] finalBoard() {
+        // Bubble sort using compareTo() from the Contestant class
+        for (int i = 0; i < contestants.length - 1; i++) {
+            for (int j = 0; j < contestants.length - 1 - i; j++) {
+                if (contestants[j] != null && contestants[j + 1] != null) {
+                    // Use compareTo method for comparison
+                    if (contestants[j].compareTo(contestants[j + 1]) < 0) {
+                        // Swap the contestants if they're out of order
+                        Contestant temp = contestants[j];
+                        contestants[j] = contestants[j + 1];
+                        contestants[j + 1] = temp;
+                    }
                 }
             }
         }
         return contestants;
-    }    
+    }
+
+    // Method to print the leaderboard
+    public void printBoard() {
+        for (Contestant contestant : contestants) {
+            if (contestant != null) {
+                System.out.println(contestant);
+            }
+        }
     }
 }
