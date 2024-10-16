@@ -46,45 +46,47 @@ public class SimplyLinkedList {
         }
         size++;
     }
-
-    public void remove(int data) {
-        if (head == null) {
-            return;
+    public void removeAtIndex(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index out of bounds");
         }
-        if (head.getData() == data) {
+        if (index == 0) {
             head = head.getNext();
-            size--;
-            return;
-        }
-        Node current = head;
-        while (current.getNext() != null) {
-            if (current.getNext().getData() == data) {
-                current.setNext(current.getNext().getNext());
-                size--;
-                return;
+        } else {
+            Node current = head;
+            for (int i = 0; i < index - 1; i++) {
+                current = current.getNext();
             }
-            current = current.getNext();
+            current.setNext(current.getNext().getNext());
         }
+        size--;
     }
+
 
     public void search(int data) {
         Node current = head;
         while (current != null) {
             if (current.getData() == data) {
-                System.out.println("Data found");
+                System.out.println("Data found: " + data);
                 return;
             }
             current = current.getNext();
         }
         System.out.println("Data not found");
     }
-
     public void traverse() {
         Node current = head;
         while (current != null) {
-            System.out.print(current.getData() + " ");
+            System.out.print(current.getData());
             current = current.getNext();
+            if (current != null) {
+                System.out.print(" -> ");
+            }
         }
         System.out.println();
+    }
+
+    public int getSize() {
+        return size;
     }
 }

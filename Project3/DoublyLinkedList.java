@@ -57,32 +57,33 @@ public class DoublyLinkedList {
         }
         size++;
     }
-
-    public void remove(int data) {
-        if (head == null) {
-            return;
+    public void removeAtIndex(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index out of bounds");
         }
-        if (head.getData() == data) {
+        if (index == 0) {
             head = head.getNext();
-            head.setPrevious(null);
+            if (head != null) {
+                head.setPrevious(null);
+            } else {
+                tail = null;
+            }
             size--;
             return;
         }
         Node current = head;
-        while (current.getNext() != null) {
-            if (current.getNext().getData() == data) {
-                current.setNext(current.getNext().getNext());
-                if (current.getNext() != null) {
-                    current.getNext().setPrevious(current);
-                } else {
-                    tail = current;
-                }
-                size--;
-                return;
-            }
+        for (int i = 0; i < index; i++) {
             current = current.getNext();
         }
+        current.getPrevious().setNext(current.getNext());
+        if (current.getNext() != null) {
+            current.getNext().setPrevious(current.getPrevious());
+        } else {
+            tail = current.getPrevious();
+        }
+        size--;
     }
+    
 
     public void search(int data) {
         Node current = head;
@@ -99,8 +100,16 @@ public class DoublyLinkedList {
     public void traverse() {
         Node current = head;
         while (current != null) {
-            System.out.println(current.getData());
+            System.out.print(current.getData());
             current = current.getNext();
+            if (current != null) {
+                System.out.print(" <-> ");
+            }
         }
+        System.out.println();
+    }
+
+    public int getSize() {
+        return size;
     }
 }
