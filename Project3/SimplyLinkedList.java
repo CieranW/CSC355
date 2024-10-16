@@ -64,16 +64,22 @@ public class SimplyLinkedList {
 
 
     public void search(int data) {
+        long startTime = System.nanoTime();
         Node current = head;
         while (current != null) {
             if (current.getData() == data) {
+                long endTime = System.nanoTime();
                 System.out.println("Data found: " + data);
+                System.out.println("Time taken: " + (endTime - startTime) + " ns");
                 return;
             }
             current = current.getNext();
         }
+        long endTime = System.nanoTime();
         System.out.println("Data not found");
+        System.out.println("Time taken: " + (endTime - startTime) + " ns");
     }
+
     public void traverse() {
         Node current = head;
         while (current != null) {
