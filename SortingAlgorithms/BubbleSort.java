@@ -17,7 +17,7 @@ public class BubbleSort {
         return count;
     }  
     public static void main(String[] args) {  
-                int arr[] ={20,10,15,54,55,11,78,14};  
+                int arr[] ={8, 1, 2, 9, 0, 3};  
                 int count = 0;
                  
                 System.out.println("Array Before Bubble Sort");  
