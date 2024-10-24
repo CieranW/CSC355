@@ -1,5 +1,5 @@
 public class Mergesort {
-   public static void merge(int [] numbers, int i, int j, int k) {
+   public static void merge(int [] numbers, int i, int j, int k, int count) {
       int mergedSize = k - i + 1;       // Size of merged partition
       int mergedNumbers [] = new int[mergedSize]; // Temporary array for merged numbers
       int mergePos;                     // Position to insert merged number
@@ -21,6 +21,7 @@ public class Mergesort {
             ++rightPos;
          }
          ++mergePos;
+         count++;
       }
 
       // If left partition is not empty, add remaining elements to merged numbers
@@ -28,6 +29,7 @@ public class Mergesort {
          mergedNumbers[mergePos] = numbers[leftPos];
          ++leftPos;
          ++mergePos;
+         count++;
       }
 
       // If right partition is not empty, add remaining elements to merged numbers
@@ -35,6 +37,7 @@ public class Mergesort {
          mergedNumbers[mergePos] = numbers[rightPos];
          ++rightPos;
          ++mergePos;
+         count++;
       }
 
       // Copy merge number back to numbers
@@ -43,24 +46,26 @@ public class Mergesort {
       }
    }
 
-   public static void mergeSort(int [] numbers, int i, int k) {
+   public static int mergeSort(int [] numbers, int i, int k, int count) {
       int j;
 
       if (i < k) {
          j = (i + k) / 2;  // Find the midpoint in the partition
-
+         count++;
          // Recursively sort left and right partitions
-         mergeSort(numbers, i, j);
-         mergeSort(numbers, j + 1, k);
+         mergeSort(numbers, i, j, count);
+         mergeSort(numbers, j + 1, k, count);
 
          // Merge left and right partition in sorted order
-         merge(numbers, i, j, k);
+         merge(numbers, i, j, k, count);
       }
+      return count;
    }
 
    public static void main(String [] args) {
       int [] numbers = {8, 1, 2, 9, 0, 3};
       int i;
+      int count = 0;
 
       System.out.print("UNSORTED: ");
       for (i = 0; i < numbers.length; ++i) {
@@ -69,12 +74,14 @@ public class Mergesort {
       System.out.println();
 
       /* initial call to merge sort with index */
-      mergeSort(numbers, 0, numbers.length - 1);
+      count = mergeSort(numbers, 0, numbers.length - 1, count);
 
       System.out.print("SORTED: ");
       for (i = 0; i < numbers.length; ++i) {
          System.out.print(numbers[i] + " ");
       }
       System.out.println();
+
+      System.out.println("Number of iterations: " + count);
    }
 }

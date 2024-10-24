@@ -1,8 +1,8 @@
 // Java implementation of ShellSort
-class ShellSort
+public class ShellSort
 {
 	/* An utility function to print array of size n*/
-	static void printArray(int arr[])
+	public static void printArray(int arr[])
 	{
 		int n = arr.length;
 		for (int i=0; i<n; ++i)
@@ -11,7 +11,7 @@ class ShellSort
 	}
 
 	/* function to sort arr using shellSort */
-	int sort(int arr[])
+	public static int shellSort(int arr[], int count)
 	{
 		int n = arr.length;
 
@@ -34,26 +34,28 @@ class ShellSort
 				int j;
 				for (j = i; j >= gap && arr[j - gap] > temp; j -= gap)
 					arr[j] = arr[j - gap];
+					count++;
 
 				// put temp (the original a[i]) in its correct
 				// location
 				arr[j] = temp;
 			}
 		}
-		return 0;
+		return count;
 	}
 
 	// Driver method
 	public static void main(String args[])
 	{
 		int arr[] = {8, 1, 2, 9, 0, 3};
+		int count = 0;
 		System.out.println("Array before sorting");
 		printArray(arr);
 
-		ShellSort ob = new ShellSort();
-		ob.sort(arr);
+		count = shellSort(arr, count);
 
 		System.out.println("Array after sorting");
 		printArray(arr);
+		System.out.println("Number of iterations: " + count);
 	}
 }
