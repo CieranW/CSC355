@@ -60,6 +60,23 @@ public class ToRun {
       return -1; /* not found */
    }
 
+   public static void PrintArray(int [] arr) {
+      int i;
+      for (i = 0; i < arr.length; ++i) {
+         System.out.print(arr[i] + " ");
+      }
+      System.out.println();
+    }
+
+    public static void PrintKeyIndex(int key, int keyIndex) {
+        if (keyIndex == -1) {
+            System.out.println(key + " was not found.");
+        } 
+        else {
+            System.out.println("Found " + key + " at index " + keyIndex + ".");
+        }
+    }
+
     public static void main(String[] args) {
         int [] arr1 = {100, 775, 146, 483, 789, 990, 844, 926, 89, 416, 540, 747, 398, 608, 356, 84, 315, 971, 834, 591, 447};
         int [] arr2 = {915, 550, 369, 666, 100, 435, 638, 342, 440, 780, 902, 901, 329, 115, 29, 361, 930, 505, 439, 75, 322};
@@ -70,36 +87,20 @@ public class ToRun {
         int key;
         int keyIndexLS, keyIndexBS;
 
-        System.out.print("Array 1: ");
-        for (i = 0; i < arr1.length; ++i) {
-            System.out.print(arr1[i] + " ");
-        }
-        System.out.println();
+        System.out.println("Array 1:");
+        PrintArray(arr1);
+        System.out.println("Array 2:");
+        PrintArray(arr2);
 
-        System.out.print("Array 2: ");
-        for (i = 0; i < arr2.length; ++i) {
-            System.out.print(arr2[i] + " ");
-        }
-        System.out.println();
-
+        // Search for the minimum value in array 1 and array 2
         key = findMinVal(arr1);
 
         keyIndexLS = linearSearch(arr1, key);
         sortArray(arr1);
         keyIndexBS = binarySearch(arr1, key);
 
-        if (keyIndexLS == -1) {
-            System.out.println(key + " was not found.");
-        } 
-        else {
-            System.out.println("Found " + key + " at index " + keyIndexLS + ".");
-        }
-        if (keyIndexBS == -1) {
-            System.out.println(key + " was not found.");
-        } 
-        else {
-            System.out.println("Found " + key + " at index " + keyIndexBS + ".");
-        }
+        PrintKeyIndex(key, keyIndexLS);
+        PrintKeyIndex(key, keyIndexBS);
 
         key = findMinVal(arr2);
 
@@ -107,19 +108,7 @@ public class ToRun {
         sortArray(arr2);
         keyIndexBS = binarySearch(arr2, key);
 
-        if (keyIndexLS == -1) {
-            System.out.println(key + " was not found.");
-        } 
-        else {
-            System.out.println("Found " + key + " at index " + keyIndexLS + ".");
-        }
-
-        if (keyIndexBS == -1) {
-            System.out.println(key + " was not found.");
-        } 
-        else {
-            System.out.println("Found " + key + " at index " + keyIndexBS + ".");
-        }
-
+        PrintKeyIndex(key, keyIndexLS);
+        PrintKeyIndex(key, keyIndexBS);
     }
 }
