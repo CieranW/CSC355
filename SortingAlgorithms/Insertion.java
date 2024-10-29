@@ -8,14 +8,19 @@ public class Insertion {
                 array [i+1] = array [i];  
                 i--;  
                 count++;
+                
             }  
             array[i+1] = key;  
+            for (int k = 0; k < array.length; k++) {
+                    System.out.print(array[k] + " ");
+                }
+                System.out.println();
         }  
         return count;
     }  
        
     public static void main(String a[]){    
-        int[] arr1 = {8, 1, 2, 9, 0, 3};    
+        int[] arr1 = {3, 0, 4, 1, 5, 2, 9, 7, 8, 6};    
         int count = 0;
         System.out.println("Before Insertion Sort");    
         for(int i:arr1){    

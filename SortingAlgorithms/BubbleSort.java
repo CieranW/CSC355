@@ -10,6 +10,10 @@ public class BubbleSort {
                                  arr[j-1] = arr[j];  
                                  arr[j] = temp;
                                 count++;
+                                for (int k = 0; k < arr.length; k++) {
+                                    System.out.print(arr[k] + " ");
+                                }
+                                System.out.println();
                           }
                           
                  }  
@@ -17,7 +21,7 @@ public class BubbleSort {
         return count;
     }  
     public static void main(String[] args) {  
-                int arr[] ={8, 1, 2, 9, 0, 3};  
+                int arr[] ={3, 0, 4, 1, 5, 2, 9, 7, 8, 6};  
                 int count = 0;
                  
                 System.out.println("Array Before Bubble Sort");  

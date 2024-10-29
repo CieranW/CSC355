@@ -22,6 +22,7 @@ public class Mergesort {
          }
          ++mergePos;
          count++;
+         printArray(numbers); // Print array after each swap
       }
 
       // If left partition is not empty, add remaining elements to merged numbers
@@ -30,6 +31,7 @@ public class Mergesort {
          ++leftPos;
          ++mergePos;
          count++;
+         printArray(numbers); // Print array after each swap
       }
 
       // If right partition is not empty, add remaining elements to merged numbers
@@ -38,6 +40,7 @@ public class Mergesort {
          ++rightPos;
          ++mergePos;
          count++;
+         printArray(numbers); // Print array after each swap
       }
 
       // Copy merge number back to numbers
@@ -62,8 +65,15 @@ public class Mergesort {
       return count;
    }
 
+   public static void printArray(int[] numbers) {
+      for (int num : numbers) {
+         System.out.print(num + " ");
+      }
+      System.out.println();
+   }
+
    public static void main(String [] args) {
-      int [] numbers = {8, 1, 2, 9, 0, 3};
+      int [] numbers = {3, 0, 4, 1, 5, 2, 9, 7, 8, 6};
       int i;
       int count = 0;
 

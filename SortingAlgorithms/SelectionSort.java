@@ -13,13 +13,17 @@ public class SelectionSort {
             }  
             int smallerNumber = arr[index];   
             arr[index] = arr[i];  
-            arr[i] = smallerNumber;  
+            arr[i] = smallerNumber; 
+            for(int k:arr){  
+                System.out.print(k+" ");  
+            } 
+            System.out.println();
         } 
         return count; 
     }  
        
     public static void main(String a[]){  
-        int[] arr1 = {8, 1, 2, 9, 0, 3};  
+        int[] arr1 = {3, 0, 4, 1, 5, 2, 9, 7, 8, 6};  
         int count = 0;
         System.out.println("Before Selection Sort");  
         for(int i:arr1){  
