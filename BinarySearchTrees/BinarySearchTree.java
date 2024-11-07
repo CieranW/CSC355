@@ -1,5 +1,8 @@
+
 public class BinarySearchTree {
+
     class Node {
+
         int key;
         Node left, right;
 
@@ -10,7 +13,7 @@ public class BinarySearchTree {
     }
 
     Node root;
-    
+
     public BinarySearchTree() {
         root = null;
     }
@@ -81,5 +84,25 @@ public class BinarySearchTree {
             root = root.left;
         }
         return minv;
+    }
+
+    public boolean search(int key) {
+        return searchRec(root, key);
+    }
+
+    public boolean searchRec(Node root, int key) {
+        if (root == null) {
+            return false;
+        }
+
+        if (root.key == key) {
+            return true;
+        }
+
+        if (root.key > key) {
+            return searchRec(root.left, key);
+        }
+
+        return searchRec(root.right, key);
     }
 }
