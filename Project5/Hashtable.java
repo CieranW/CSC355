@@ -2,11 +2,12 @@ package Project5;
 
 @SuppressWarnings("unchecked")
 public class Hashtable<K, V> {
-    private Pair[] table;
+    private Pair<K, V>[] table;
     private int n;// the number of key-value pairs in the table
     private int m;// the size of the table
     private double alphaHigh = 0.5;// resize if n/m exceeds this (1/2)
     private double alphaLow = 0.125;// resize if n/m goes below this (1/8)
+    private static final Object DeletedKey = new Object();
 
     // constructor--default table size is 11
     public Hashtable() {
@@ -27,50 +28,37 @@ public class Hashtable<K, V> {
     // do not forget that you will have to cast the result to (V)
     public V get(K key) {
         // TO BE IMPLEMENTED
-        if (key == null) {
-            return null;
-        } else {
-            int index = key.hashCode() % m;
-            if (table[index] == null) {
-                return null;
-            } else {
-                Pair<K, V> pair = table[index];
-                if (pair.getKey().equals(key)) {
-                    return pair.getValue();
-                } else {
-                    return null;
-                }
+        int index = Math.abs(key.hashCode()) % m;
+        while (table[index] != null) {
+            if (table[index].getKey().equals(key)) {
+                return (V) table[index].getValue();
             }
+            index = (index + 1) % m;
         }
+        return null;
     }
 
     // puts (key, val) into the table or updates value
     // if the key is already in the table
     // resize to getNextNum(2*m) if (double)n/m exceeds alphaHigh after the insert
-    public void put(K key, V val) {
-        // TO BE IMPLEMENTED
-        if (key == null) {
-            return;
-        } else {
-            int index = key.hashCode() % m;
-            if (table[index] == null) {
-                Pair<K, V> pair = new Pair<K, V>(key, val);
-                table[index] = pair;
-                n++;
-            } else {
-                Pair<K, V> pair = table[index];
-                if (pair.getKey().equals(key)) {
-                    pair.setValue(val);
-                } else {
-                    int i = 1;
-                    while (table[(index + i) % m] != null) {
-                        i++;
-                    }
-                    Pair<K, V> newPair = new Pair<K, V>(key, val);
-                    table[(index + i) % m] = newPair;
-                    n++;
-                }
-            }
+   
+    public void put(K key, V value) {
+        if (key == null) return;
+
+        int index = Math.abs(key.hashCode()) % m;
+
+        while (table[index] != null && (table[index].getKey().equals(DeletedKey) || !table[index].getKey().equals(key))) {
+            index = (index + 1) % m;
+        }
+ 
+        if(table[index] == null){ //only increment n when its empty
+            n++;
+        }
+ 
+        table[index] = new Pair<>(key, value);//noticed that you dont need to use set value but you can do this instead?
+ 
+         if (((double) n / m) > alphaHigh) {
+            resize(getNextNum(2 * m));
         }
     }
 
@@ -79,57 +67,43 @@ public class Hashtable<K, V> {
     // resize to getNextNum(m/2) if m/2 >= 11 AND (double)n/m < alphaLow after the
     // delete
     public V delete(K key) {
-        // TO BE IMPLEMENTED
-        if (key == null) {
-            return null;
-        } else {
-            int index = key.hashCode() % m;
-            if (table[index] == null) {
-                return null;
-            } else {
-                Pair<K, V> pair = table[index];
-                if (pair.getKey().equals(key)) {
-                    V value = pair.getValue();
-                    table[index] = null;
-                    n--;
-                    return value;
-                } else {
-                    int i = 1;
-                    while (table[(index + i) % m] != null) {
-                        Pair<K, V> newPair = table[(index + i) % m];
-                        if (newPair.getKey().equals(key)) {
-                            V value = newPair.getValue();
-                            table[(index + i) % m] = null;
-                            n--;
-                            return value;
-                        }
-                        i++;
-                    }
-                    return null;
+ 
+        int hashCode = Math.abs(key.hashCode());
+        int index = hashCode % m;
+ 
+        while (table[index] != null) {
+            if (table[index].getKey().equals(key) && !table[index].isDeleted()) {
+                V deletedValue = (V) table[index].getValue();
+                table[index] = new Pair<K, V>((K) DeletedKey, null);//set key to deletedKey and value to null
+                n--;
+ 
+                if ((m / 2 >= 11) && ((double)n/m < alphaLow)) {
+                    resize(getNextNum(m / 2));
                 }
+ 
+                return deletedValue;
             }
         }
+ 
+        return null; 
     }
 
     // return true if table is empty
     public boolean isEmpty() {
         // TO BE IMPLEMENTED
-        if (m == 0) {
-            return true;
-        }
-        return false;
+        return n == 0;
     }
 
     // return the number of (key,value) pairs in the table
     public int size() {
         // TO BE IMPLEMENTED
-        return m;
+        return n;
     }
 
     // This method is used for testing only. Do not use this method yourself for any
     // reason
     // other than debugging. Do not change this method.
-    public Pair[] getTable() {
+    public Pair<K, V>[] getTable() {
         return table;
     }
 
@@ -158,5 +132,29 @@ public class Hashtable<K, V> {
                 break;
         }
         return num;
+    }
+
+    // resizes the table to the new capacity
+    private void resize(int newCapacity) {
+        Pair<K, V>[] newTable = new Pair[newCapacity];
+        Pair<K, V>[] oldTable = table; // Save the old table
+        m = newCapacity; // Update the table size
+ 
+        for (Pair<K, V> pair : oldTable) {
+            if (pair != null && !pair.isDeleted() && !pair.getKey().equals(DeletedKey)) {
+                int hashCode = Math.abs(pair.getKey().hashCode());
+                int index = hashCode % m;
+ 
+                while (newTable[index] != null) {
+                    index = (index + 1) % m;
+                }
+ 
+                newTable[index] = pair;
+                n++;
+            }
+        }
+ 
+        // Update the table to the new table
+        table = newTable;
     }
 }

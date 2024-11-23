@@ -16,19 +16,47 @@ public class HashtableTest {
 	private static ArrayList<String> nameList;
 	private static ArrayList<String> inTable;
 	private static Random gen;
-	private static Pair[] arr1 = new Pair[] { null, new Pair("Adams", "Anna Adams"), new Pair("Smith", "Mary Smith"),
-			null, null };
-	private static Pair[] arr2 = new Pair[] { new Pair("Smith", "Mary Smith"), null, null, null, null, null, null,
-			new Pair("Davidson", "Minnie Davidson"), new Pair("Bates", "Emma Bates"), new Pair("Adams", "Anna Adams"),
-			new Pair("Carson", "Elizabeth Carson") };
-	private static Pair[] arr3 = new Pair[] { null, null, new Pair("Davidson", "Minnie Davidson"), null,
-			new Pair("Carson", "Elizabeth Carson"), new Pair("Ellis", "Margaret Ellis"), null, null,
-			new Pair("Ingles", "Sarah Ingles"), null, null, new Pair("Harris", "Bertha Harris"), null,
-			new Pair("Adams", "Anna Adams"), new Pair("George", "Alice George"), new Pair("Frank", "Ida Frank"),
-			new Pair("Smith", "Mary Smith"), null, null, null, new Pair("Jackson", "Annie Jackson"), null,
-			new Pair("Bates", "Emma Bates") };
-	private static Pair[] arr4 = new Pair[] { null, null, null, null, new Pair("Jackson", "Annie Jackson"), null, null,
-			null, new Pair("Ingles", "Sarah Ingles"), null, null };
+	private static Pair<String, String>[] arr1 = new Pair[] { 
+		null, 
+		new Pair<>("Adams", "Anna Adams"), 
+		new Pair<>("Smith", "Mary Smith"),
+		null, null };
+
+	private static Pair<String, String>[] arr2 = new Pair[] { 
+		new Pair<>("Smith", "Mary Smith"), 
+		null, null, null, null, null, null,
+		new Pair<>("Davidson", "Minnie Davidson"), 
+		new Pair<>("Bates", "Emma Bates"), 
+		new Pair<>("Adams", "Anna Adams"), 
+		new Pair<>("Carson", "Elizabeth Carson") };
+
+	private static Pair<String, String>[] arr3 = new Pair[] { 
+		null, null, 
+		new Pair<>("Davidson", "Minnie Davidson"), 
+		null, 
+		new Pair<>("Carson", "Elizabeth Carson"), 
+		new Pair<>("Ellis", "Margaret Ellis"), 
+		null, null,
+		new Pair<>("Ingles", "Sarah Ingles"), 
+		null, null, 
+		new Pair<>("Harris", "Bertha Harris"), 
+		null,
+		new Pair<>("Adams", "Anna Adams"), 
+		new Pair<>("George", "Alice George"), 
+		new Pair<>("Frank", "Ida Frank"),
+		new Pair<>("Smith", "Mary Smith"), 
+		null, null, null, 
+		new Pair<>("Jackson", "Annie Jackson"), 
+		null,
+		new Pair<>("Bates", "Emma Bates") };
+
+	private static Pair<String, String>[] arr4 = new Pair[] { 
+		null, null, null, null, 
+		new Pair<>("Jackson", "Annie Jackson"), 
+		null, null, null, 
+		new Pair<>("Ingles", "Sarah Ingles"), 
+		null, null };
+
 	private static int n = 25;
 
 	public static void main(String[] args) {
@@ -160,7 +188,7 @@ public class HashtableTest {
 			table.put(split[1], name);
 			index++;
 		}
-		Pair[] array = table.getTable();
+		Pair<String, String>[] array = table.getTable();
 		int arrNum = 1;
 		score += checkArray(array, arrNum);
 
@@ -202,8 +230,8 @@ public class HashtableTest {
 		return score;
 	}
 
-	private static double checkArray(Pair[] act, int num) {
-		Pair[] exp = null;
+	private static double checkArray(Pair<String, String>[] act, int num) {
+		Pair<String, String>[] exp = null;
 		if (num == 1)
 			exp = arr1;
 		else if (num == 2)

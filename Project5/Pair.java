@@ -28,4 +28,8 @@ public class Pair<K, V> {
     public String toString() {
         return "(key = " + key.toString() + ", value = " + val.toString() + ")";
     }
+
+    public boolean isDeleted() {
+        return key == null;
+    }
 }
