@@ -30,7 +30,8 @@ public class Hashtable<K, V> {
         // TO BE IMPLEMENTED
         int index = Math.abs(key.hashCode()) % m;
         while (table[index] != null) {
-            if (table[index].getKey().equals(key)) {
+            // System.out.println("Checking index: " + index + " with key: " + table[index].getKey());
+            if (table[index].getKey().equals(key) && !table[index].isDeleted()) {
                 return (V) table[index].getValue();
             }
             index = (index + 1) % m;
@@ -51,7 +52,7 @@ public class Hashtable<K, V> {
             index = (index + 1) % m;
         }
  
-        if(table[index] == null){ //only increment n when its empty
+        if(table[index] == null || table[index].getKey().equals(DeletedKey)){ //only increment n when its empty
             n++;
         }
  
@@ -70,21 +71,39 @@ public class Hashtable<K, V> {
  
         int hashCode = Math.abs(key.hashCode());
         int index = hashCode % m;
+        // System.out.println("Deleting key: " + key + " at index: " + index);
  
-        while (table[index] != null) {
-            if (table[index].getKey().equals(key) && !table[index].isDeleted()) {
+        // while (table[index] != null) {
+        //     System.out.println("Checking index: " + index + " with key: " + table[index].getKey());
+        //     if (table[index].getKey().equals(key) && !table[index].isDeleted()) {
+        //         V deletedValue = (V) table[index].getValue();
+        //         n--;
+        //         table[index] = new Pair<K, V>((K) DeletedKey, null);//set key to deletedKey and value to null
+        //         System.out.println("Deleted key: " + key + " at index: " + index);
+ 
+        //         if ((m / 2 >= 11) && ((double) n / m) < alphaLow) {
+        //             System.out.println("Resizing table to: " + getNextNum(m / 2));
+        //             resize(getNextNum(m / 2));
+        //         }
+ 
+        //         return deletedValue;
+        //     }
+        // }
+ 
+        int startIndex = index;
+        do {
+            if (table[index] != null && table[index].getKey().equals(key) && !table[index].isDeleted()) {
                 V deletedValue = (V) table[index].getValue();
-                table[index] = new Pair<K, V>((K) DeletedKey, null);//set key to deletedKey and value to null
                 n--;
- 
-                if ((m / 2 >= 11) && ((double)n/m < alphaLow)) {
+                table[index] = new Pair<K, V>((K) DeletedKey, null);
+                if ((m / 2 >= 11) && ((double) n / m) < alphaLow) {
                     resize(getNextNum(m / 2));
                 }
- 
                 return deletedValue;
             }
-        }
- 
+            index = (index + 1) % m;
+        } while (index != startIndex);
+
         return null; 
     }
 
@@ -136,6 +155,7 @@ public class Hashtable<K, V> {
 
     // resizes the table to the new capacity
     private void resize(int newCapacity) {
+        // System.out.println("Resizing table to: " + newCapacity);
         Pair<K, V>[] newTable = new Pair[newCapacity];
         Pair<K, V>[] oldTable = table; // Save the old table
         m = newCapacity; // Update the table size
@@ -150,7 +170,7 @@ public class Hashtable<K, V> {
                 }
  
                 newTable[index] = pair;
-                n++;
+                // System.out.println("Resizing key: " + pair.getKey() + " at index: " + index);
             }
         }
  

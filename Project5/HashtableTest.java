@@ -271,7 +271,8 @@ public class HashtableTest {
 		inTable = new ArrayList<String>();
 		BufferedReader br;
 		try {
-			br = new BufferedReader(new FileReader("names.txt"));
+			// Edited to account for working directory
+			br = new BufferedReader(new FileReader("Project5/names.txt"));
 			String line = br.readLine();
 			while (line != null) {
 				String[] split = line.split(",");

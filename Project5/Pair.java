@@ -21,8 +21,13 @@ public class Pair<K, V> {
         this.val = val;
     }
 
-    public boolean equals(Pair p) {
-        return this.key.equals(p.getKey()) && this.val.equals(p.getValue());
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true; // Same reference
+        if (obj == null || getClass() != obj.getClass()) return false; // Null or different class
+        Pair<?, ?> other = (Pair<?, ?>) obj; // Type-safe cast
+        return (key == null ? other.key == null : key.equals(other.key)) &&
+            (val == null ? other.val == null : val.equals(other.val));
     }
 
     public String toString() {
